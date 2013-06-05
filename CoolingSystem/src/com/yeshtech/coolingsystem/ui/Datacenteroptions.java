@@ -10,14 +10,15 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Combo;
 
 public class Datacenteroptions {
 
 	protected Shell shell;
-	private Text finalStepTextField;
-	private Text finalTimeTextField;
-	private Text timeStepValueTextField;
-	private Text restartFileNameTextField;
+	private Text txtRunTransParaFinalStep;
+	private Text txtRunTransParaFinalTime;
+	private Text txtRunTransParaTimeStepVal;
+	private Text txtRunTransRestartFileName;
 	private Text txtLumpsPLPrintedLumps;
 	private Text txtLumpsPLPrintedPaths;
 	private Text txtSolnGSGlobalRelPara;
@@ -56,6 +57,11 @@ public class Datacenteroptions {
 	private Text txtExtEAHDuePoint;
 	private Text txtExtEAHWetBulb;
 	private Text txtExtEAHExtWatTemp;
+	private Text txtIONotifyEverySteps;
+	private Text txtIOPrintCriPrintEverySteps;
+	private Text txtIOPrintCriPrintEveryS;
+	private Text txtIOBaseName;
+	private Text txtIONumSteps;
 
 	/**
 	 * Launch the application.
@@ -100,8 +106,8 @@ public class Datacenteroptions {
 		tabFolder.setSelectionBackground(Display.getCurrent().getSystemColor(
 				SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
 
-		CTabItem tabItemRun = new CTabItem(tabFolder, SWT.NONE);
-		tabItemRun.setText(" Run ");
+		CTabItem chkboxRunOverriteComp = new CTabItem(tabFolder, SWT.NONE);
+		chkboxRunOverriteComp.setText(" Run ");
 
 		CTabItem tabItemIO = new CTabItem(tabFolder, SWT.NONE);
 		tabItemIO.setText(" I / O ");
@@ -125,10 +131,72 @@ public class Datacenteroptions {
 		tabItemExternal.setText(" External ");
 
 		Composite runComposite = new Composite(tabFolder, SWT.NONE);
-		tabItemRun.setControl(runComposite);
+		chkboxRunOverriteComp.setControl(runComposite);
 
 		Composite ioComposite = new Composite(tabFolder, SWT.NONE);
 		tabItemIO.setControl(ioComposite);
+		
+		Label label_17 = new Label(ioComposite, SWT.NONE);
+		label_17.setText("Notify Every");
+		label_17.setBounds(10, 13, 82, 15);
+		
+		txtIONotifyEverySteps = new Text(ioComposite, SWT.BORDER);
+		txtIONotifyEverySteps.setBounds(98, 10, 211, 20);
+		
+		Label label_19 = new Label(ioComposite, SWT.NONE);
+		label_19.setText("steps");
+		label_19.setBounds(315, 13, 55, 15);
+		
+		Group grpIOInfoLevel = new Group(ioComposite, SWT.NONE);
+		grpIOInfoLevel.setText("Information Level");
+		grpIOInfoLevel.setBounds(10, 42, 323, 65);
+		
+		Combo comIOInfoLevel = new Combo(grpIOInfoLevel, SWT.NONE);
+		comIOInfoLevel.setBounds(10, 20, 291, 20);
+		
+		Button chkBoxIOPrintRes = new Button(ioComposite, SWT.CHECK);
+		chkBoxIOPrintRes.setText("Print results for failed iterations");
+		chkBoxIOPrintRes.setBounds(346, 66, 192, 16);
+		
+		Group grpIOPrintCriterion = new Group(ioComposite, SWT.NONE);
+		grpIOPrintCriterion.setText("Print Criterion");
+		grpIOPrintCriterion.setBounds(10, 111, 323, 82);
+		
+		Button rdoIOPrintCriPrintEverySteps = new Button(grpIOPrintCriterion, SWT.RADIO);
+		rdoIOPrintCriPrintEverySteps.setText("Print every");
+		rdoIOPrintCriPrintEverySteps.setBounds(10, 22, 90, 16);
+		
+		Button rdoIOPrintCriPrintEveryS = new Button(grpIOPrintCriterion, SWT.RADIO);
+		rdoIOPrintCriPrintEveryS.setText("Print every");
+		rdoIOPrintCriPrintEveryS.setBounds(10, 54, 90, 16);
+		
+		txtIOPrintCriPrintEverySteps = new Text(grpIOPrintCriterion, SWT.BORDER);
+		txtIOPrintCriPrintEverySteps.setBounds(106, 20, 150, 20);
+		
+		txtIOPrintCriPrintEveryS = new Text(grpIOPrintCriterion, SWT.BORDER);
+		txtIOPrintCriPrintEveryS.setBounds(106, 52, 150, 20);
+		
+		Label label_20 = new Label(grpIOPrintCriterion, SWT.NONE);
+		label_20.setText("steps");
+		label_20.setBounds(262, 23, 41, 15);
+		
+		Label label_21 = new Label(grpIOPrintCriterion, SWT.NONE);
+		label_21.setText("s");
+		label_21.setBounds(262, 57, 17, 15);
+		
+		Label label_22 = new Label(ioComposite, SWT.NONE);
+		label_22.setText("Base name of dumpfile :");
+		label_22.setBounds(10, 202, 134, 15);
+		
+		txtIOBaseName = new Text(ioComposite, SWT.BORDER);
+		txtIOBaseName.setBounds(150, 199, 183, 20);
+		
+		Label label_23 = new Label(ioComposite, SWT.WRAP);
+		label_23.setText("Number of steps between dumpfile generation :");
+		label_23.setBounds(10, 238, 161, 31);
+		
+		txtIONumSteps = new Text(ioComposite, SWT.BORDER);
+		txtIONumSteps.setBounds(150, 235, 183, 20);
 
 		Composite lumpsComposite = new Composite(tabFolder, SWT.NONE);
 		tabItemLumpsPaths.setControl(lumpsComposite);
@@ -537,49 +605,49 @@ public class Datacenteroptions {
 		txtDataCenterGPCeilOpen = new Text(grpGenerationParameters, SWT.BORDER);
 		txtDataCenterGPCeilOpen.setBounds(223, 169, 58, 20);
 
-		Group simulationTypeGroup = new Group(runComposite, SWT.NONE);
-		simulationTypeGroup.setText("Simulation Type");
-		simulationTypeGroup.setBounds(22, 25, 117, 98);
+		Group grpRunSimulationType = new Group(runComposite, SWT.NONE);
+		grpRunSimulationType.setText("Simulation Type");
+		grpRunSimulationType.setBounds(22, 25, 117, 98);
 
-		Button steadyRadioButton = new Button(simulationTypeGroup, SWT.RADIO);
-		steadyRadioButton.setBounds(10, 27, 90, 16);
-		steadyRadioButton.setText("Steady");
+		Button rbtnRunSimTypeSteady = new Button(grpRunSimulationType, SWT.RADIO);
+		rbtnRunSimTypeSteady.setBounds(10, 27, 90, 16);
+		rbtnRunSimTypeSteady.setText("Steady");
 
-		Button transientRadioButton = new Button(simulationTypeGroup, SWT.RADIO);
-		transientRadioButton.setBounds(10, 49, 90, 16);
-		transientRadioButton.setText("Transient");
+		Button rbtnRunSimTypeTransient = new Button(grpRunSimulationType, SWT.RADIO);
+		rbtnRunSimTypeTransient.setBounds(10, 49, 90, 16);
+		rbtnRunSimTypeTransient.setText("Transient");
 
-		Group transientParamGroup = new Group(runComposite, SWT.NONE);
-		transientParamGroup.setText("Transient Parameter");
-		transientParamGroup.setBounds(187, 25, 345, 189);
+		Group grpRunTransientParam = new Group(runComposite, SWT.NONE);
+		grpRunTransientParam.setText("Transient Parameter");
+		grpRunTransientParam.setBounds(187, 25, 345, 189);
 
-		Button finalStepRadioButton = new Button(transientParamGroup, SWT.RADIO);
-		finalStepRadioButton.setBounds(10, 26, 90, 16);
-		finalStepRadioButton.setText("Final Step");
+		Button rbtnRunTransParaFinalStep = new Button(grpRunTransientParam, SWT.RADIO);
+		rbtnRunTransParaFinalStep.setBounds(10, 26, 90, 16);
+		rbtnRunTransParaFinalStep.setText("Final Step");
 
-		finalStepTextField = new Text(transientParamGroup, SWT.BORDER);
-		finalStepTextField.setBounds(127, 21, 181, 21);
+		txtRunTransParaFinalStep = new Text(grpRunTransientParam, SWT.BORDER);
+		txtRunTransParaFinalStep.setBounds(127, 21, 181, 21);
 
-		Button finalTimeRadioButton = new Button(transientParamGroup, SWT.RADIO);
-		finalTimeRadioButton.setBounds(10, 55, 90, 16);
-		finalTimeRadioButton.setText("Final Time");
+		Button rbtnRunTransParaFinalTime = new Button(grpRunTransientParam, SWT.RADIO);
+		rbtnRunTransParaFinalTime.setBounds(10, 55, 90, 16);
+		rbtnRunTransParaFinalTime.setText("Final Time");
 
-		finalTimeTextField = new Text(transientParamGroup, SWT.BORDER);
-		finalTimeTextField.setBounds(127, 48, 181, 21);
+		txtRunTransParaFinalTime = new Text(grpRunTransientParam, SWT.BORDER);
+		txtRunTransParaFinalTime.setBounds(127, 48, 181, 21);
 
-		Label timeStepValueLabel = new Label(transientParamGroup, SWT.NONE);
-		timeStepValueLabel.setBounds(34, 106, 98, 15);
-		timeStepValueLabel.setText("Time Step Value :");
+		Label restartTimeStepValue = new Label(grpRunTransientParam, SWT.NONE);
+		restartTimeStepValue.setBounds(34, 106, 98, 15);
+		restartTimeStepValue.setText("Time Step Value :");
 
-		Label restartFileLabel = new Label(transientParamGroup, SWT.NONE);
+		Label restartFileLabel = new Label(grpRunTransientParam, SWT.NONE);
 		restartFileLabel.setBounds(34, 139, 98, 15);
 		restartFileLabel.setText("Restart File Name :");
 
-		timeStepValueTextField = new Text(transientParamGroup, SWT.BORDER);
-		timeStepValueTextField.setBounds(151, 103, 168, 21);
+		txtRunTransParaTimeStepVal = new Text(grpRunTransientParam, SWT.BORDER);
+		txtRunTransParaTimeStepVal.setBounds(151, 103, 168, 21);
 
-		restartFileNameTextField = new Text(transientParamGroup, SWT.BORDER);
-		restartFileNameTextField.setBounds(151, 136, 168, 21);
+		txtRunTransRestartFileName = new Text(grpRunTransientParam, SWT.BORDER);
+		txtRunTransRestartFileName.setBounds(151, 136, 168, 21);
 
 		Button overriteCheckButton = new Button(runComposite, SWT.CHECK);
 		overriteCheckButton.setBounds(25, 229, 467, 16);
